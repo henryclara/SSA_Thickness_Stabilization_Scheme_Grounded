@@ -9,7 +9,7 @@ def viscosity(ux,uy,thick):
        +1e-5**2 )**((1-n)/(2*n))
     return mu
 
-def mark_bed_surface(msh, outflow_id=1, inflow_id=2, right_id=3, left_id=4, cylinder_id=5):
+def mark_bed_surface(msh, outflow_id=1, inflow_id=2, right_id=3, left_id=4):
     dim = msh.geometric_dimension()
     msh.init()
     boundaries = MeshFunction("size_t", msh, dim-1)
@@ -23,10 +23,6 @@ def mark_bed_surface(msh, outflow_id=1, inflow_id=2, right_id=3, left_id=4, cyli
             boundaries[facet] = right_id
         elif facet.exterior() and facet.normal()[dim - 2] < -10 * DOLFIN_EPS:
             boundaries[facet] = left_id
-        if facet.exterior():
-            x = facet.midpoint()
-            if abs((x[0]-50000)**2 + (x[1]-50000)**2)**0.5 - 10000 < 500:
-                boundaries[facet] = cylinder_id
     return boundaries
 
 def plot_field(field, label, cmap='plasma_r'):
@@ -34,7 +30,8 @@ def plot_field(field, label, cmap='plasma_r'):
     cb = plt.colorbar(c)
     cb.set_label(label, size=20)
     cb.ax.tick_params(labelsize=15) 
-    plt.xlabel(r'$x$ [m]', size=20)
-    plt.ylabel(r'$y$ [m]', size=20)
+    plt.xlabel(r'$x$ (m)', size=20)
+    plt.ylabel(r'$y$ (m)', size=20)
     plt.ticklabel_format(style='sci', axis='x', scilimits=(0,0))
     plt.ticklabel_format(style='sci', axis='y', scilimits=(0,0))
+    plt.savefig("Results/" + label + "_dt_" + str(dt) + "_theta_" + str(theta) + "_T_" + str(T) + ".png", dpi=300)
