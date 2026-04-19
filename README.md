@@ -1,3 +1,5 @@
+# The Thickness Stabilisation Scheme for Grounded Ice
+
 This repository contains a Shallow Shelf Approximation (SSA) model implemented with the FEniCS finite element software. We introduce the Thickness Stabilization Scheme (TSS), which treats the driving force implicitly and significantly increases the largest stable time-step size, whilst retaining high accuracy in SSA simulations. This repository contains:
 
 - A Jupyter Notebook, which outlines the derivation of the Thickness Stabilization Scheme
